@@ -506,6 +506,400 @@
                 width: 100%;
             }
         }
+
+        /* Salary recommendation styles */
+        .salary-summary {
+            padding: 1rem 0;
+        }
+        
+        .salary-summary h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .salary-summary h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--neutral-700);
+            margin: 1.5rem 0 0.75rem;
+        }
+        
+        .salary-description {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--neutral-600);
+        }
+        
+        .salary-details {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .salary-card {
+            background-color: var(--primary-light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 220px;
+            text-align: center;
+        }
+        
+        .salary-header {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .salary-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+        
+        .salary-note {
+            font-size: 0.8rem;
+            color: var (--neutral-600);
+        }
+        
+        .salary-metrics {
+            display: flex;
+            flex: 2;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .salary-metric {
+            flex: 1;
+            min-width: 150px;
+            background: var(--card-bg);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius);
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .metric-label {
+            font-weight: 500;
+            color: var(--neutral-600);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin: 0.25rem 0;
+        }
+        
+        .metric-note {
+            font-size: 0.75rem;
+            color: var(--neutral-500);
+        }
+        
+        .salary-explanation {
+            background-color: var(--neutral-50);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+        
+        .salary-explanation p {
+            margin-bottom: 1rem;
+        }
+        
+        .salary-explanation ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .salary-explanation li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .salary-note-block {
+            background-color: var(--secondary-light);
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin-top: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .salary-details {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .salary-metrics {
+                gap: 1rem;
+            }
+        }
+
+        /* Summary tab styles */
+        .summary-container {
+            padding: 1rem 0;
+        }
+        
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        .summary-section {
+            margin-bottom: 2rem;
+            background-color: var(--neutral-50);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--neutral-200);
+        }
+        
+        .summary-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+        
+        .summary-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .summary-header h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin: 0;
+        }
+        
+        .summary-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .cost-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .summary-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            flex: 1;
+            min-width: 250px;
+            border: 1px solid var(--neutral-200);
+        }
+        
+        .highlight-card {
+            background-color: var(--primary-light);
+            border-color: var(--primary-color);
+        }
+        
+        .summary-card-title {
+            font-weight: 600;
+            color: var(--neutral-700);
+            margin-bottom: 1rem;
+            text-align: center;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--neutral-200);
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .summary-table td {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--neutral-100);
+        }
+        
+        .summary-table td:first-child {
+            text-align: left;
+            color: var(--neutral-700);
+        }
+        
+        .summary-table td:last-child {
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        .summary-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .summary-total td {
+            padding-top: 0.75rem;
+            font-weight: 600;
+            border-top: 2px solid var(--neutral-200);
+            border-bottom: none;
+        }
+        
+        .key-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .summary-metric {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--neutral-200);
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            color: var(--neutral-600);
+            font-size: 0.9rem;
+        }
+        
+        .salary-summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1.5rem;
+        }
+        
+        .big-number {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+        
+        .summary-note {
+            color: var(--neutral-600);
+            font-size: 0.85rem;
+        }
+        
+        .summary-metrics-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .summary-small-metric {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var (--shadow-sm);
+            border: 1px solid var(--neutral-200);
+        }
+        
+        .small-metric-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--neutral-800);
+        }
+        
+        .small-metric-label {
+            color: var(--neutral-600);
+            font-size: 0.85rem;
+        }
+        
+        .comparison-snapshot {
+            width: 100%;
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--neutral-200);
+        }
+        
+        .comparison-year {
+            margin-bottom: 1rem;
+            color: var(--neutral-700);
+        }
+        
+        .year-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0 0.5rem;
+        }
+        
+        .comparison-values {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .comparison-amount {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .comparison-label {
+            color: var(--neutral-600);
+            font-size: 0.9rem;
+        }
+        
+        .comparison-vs {
+            font-weight: 700;
+            color: var(--neutral-500);
+            font-size: 1.25rem;
+            margin: 0 1rem;
+        }
+        
+        .winner-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            border-radius: 2rem;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+        }
+        
+        .summary-action {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--neutral-600);
+        }
+        
+        @media (max-width: 768px) {
+            .cost-breakdown, 
+            .salary-summary-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-values {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .comparison-vs {
+                margin: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -612,12 +1006,176 @@
         
         <div class="card">
             <div class="tabs">
-                <button class="tab-button active" onclick="openTab(event, 'propertyTab')">Property Investment</button>
+                <button class="tab-button active" onclick="openTab(event, 'summaryTab')">Summary</button>
+                <button class="tab-button" onclick="openTab(event, 'propertyTab')">Property Investment</button>
                 <button class="tab-button" onclick="openTab(event, 'sp500Tab')">S&P 500 Investment</button>
                 <button class="tab-button" onclick="openTab(event, 'comparisonTab')">Comparison</button>
+                <button class="tab-button" onclick="openTab(event, 'salaryTab')">Salary Recommendation</button>
             </div>
             
-            <div id="propertyTab" class="tab-content active">
+            <div id="summaryTab" class="tab-content active">
+                <div class="summary-container">
+                    <h3 class="summary-title">Investment Summary</h3>
+                    
+                    <div class="summary-section">
+                        <div class="summary-header">
+                            <div class="summary-icon">💰</div>
+                            <h4>Property Cost Breakdown</h4>
+                        </div>
+                        <div class="summary-grid cost-breakdown">
+                            <div class="summary-card">
+                                <div class="summary-card-title">Monthly Expenses</div>
+                                <table class="summary-table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Mortgage Payment</td>
+                                            <td id="summary-monthly-mortgage">$0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Property Tax</td>
+                                            <td id="summary-monthly-tax">$0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>HOA Fees</td>
+                                            <td id="summary-monthly-hoa">$0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Insurance</td>
+                                            <td id="summary-monthly-insurance">$0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Maintenance</td>
+                                            <td id="summary-monthly-maintenance">$0</td>
+                                        </tr>
+                                        <tr class="summary-total">
+                                            <td>Total Monthly</td>
+                                            <td id="summary-monthly-total">$0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="summary-card">
+                                <div class="summary-card-title">Annual Expenses</div>
+                                <table class="summary-table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Mortgage Payment</td>
+                                            <td id="summary-annual-mortgage">$0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Property Tax</td>
+                                            <td id="summary-annual-tax">$0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>HOA Fees</td>
+                                            <td id="summary-annual-hoa">$0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Insurance</td>
+                                            <td id="summary-annual-insurance">$0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Maintenance</td>
+                                            <td id="summary-annual-maintenance">$0</td>
+                                        </tr>
+                                        <tr class="summary-total">
+                                            <td>Total Annual</td>
+                                            <td id="summary-annual-total">$0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-section">
+                        <div class="summary-header">
+                            <div class="summary-icon">🏠</div>
+                            <h4>Property Investment Snapshot</h4>
+                        </div>
+                        <div class="summary-grid key-metrics">
+                            <div class="summary-metric">
+                                <div class="metric-value" id="summary-property-value">$0</div>
+                                <div class="metric-label">Property Value</div>
+                            </div>
+                            <div class="summary-metric">
+                                <div class="metric-value" id="summary-down-payment">$0</div>
+                                <div class="metric-label">Down Payment</div>
+                            </div>
+                            <div class="summary-metric">
+                                <div class="metric-value" id="summary-loan-amount">$0</div>
+                                <div class="metric-label">Loan Amount</div>
+                            </div>
+                            <div class="summary-metric">
+                                <div class="metric-value positive" id="summary-year-one-equity">$0</div>
+                                <div class="metric-label">Year 1 Equity</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-section">
+                        <div class="summary-header">
+                            <div class="summary-icon">👨‍💼</div>
+                            <h4>Income Recommendation</h4>
+                        </div>
+                        <div class="summary-grid salary-summary-grid">
+                            <div class="summary-card highlight-card">
+                                <div class="summary-card-title">Recommended Income</div>
+                                <div class="big-number" id="summary-recommended-salary">$0</div>
+                                <div class="summary-note">annual income before taxes</div>
+                            </div>
+                            <div class="summary-metrics-group">
+                                <div class="summary-small-metric">
+                                    <div class="small-metric-value" id="summary-monthly-cost">$0</div>
+                                    <div class="small-metric-label">Monthly Housing Cost</div>
+                                </div>
+                                <div class="summary-small-metric">
+                                    <div class="small-metric-value" id="summary-cost-ratio">28%</div>
+                                    <div class="small-metric-label">of gross income</div>
+                                </div>
+                                <div class="summary-small-metric">
+                                    <div class="small-metric-value" id="summary-take-home">$0</div>
+                                    <div class="small-metric-label">Monthly Take-Home Pay</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-section">
+                        <div class="summary-header">
+                            <div class="summary-icon">⚖️</div>
+                            <h4>Investment Comparison</h4>
+                        </div>
+                        <div class="summary-grid">
+                            <div class="comparison-snapshot">
+                                <div class="comparison-year">
+                                    <span>After</span>
+                                    <span class="year-number" id="summary-comparison-year">30</span>
+                                    <span>years</span>
+                                </div>
+                                <div class="comparison-values">
+                                    <div class="comparison-value">
+                                        <div class="comparison-amount" id="summary-property-position">$0</div>
+                                        <div class="comparison-label">Property Net Position</div>
+                                    </div>
+                                    <div class="comparison-vs">VS</div>
+                                    <div class="comparison-value">
+                                        <div class="comparison-amount" id="summary-sp500-value">$0</div>
+                                        <div class="comparison-label">S&P 500 Value</div>
+                                    </div>
+                                </div>
+                                <div class="winner-badge" id="summary-winner">S&P 500 wins by $0</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-action">
+                        <p>View detailed breakdowns in the other tabs for more information.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="propertyTab" class="tab-content">
                 <div class="table-container">
                     <table id="resultTable">
                         <thead>
@@ -680,6 +1238,53 @@
                             <!-- Comparison results will be populated here -->
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <div id="salaryTab" class="tab-content">
+                <div class="salary-summary">
+                    <h3>Recommended Salary Analysis</h3>
+                    <p class="salary-description">Based on your investment parameters, here's the recommended annual income needed to comfortably afford this property investment:</p>
+                    
+                    <div class="salary-details">
+                        <div class="salary-card">
+                            <div class="salary-header">Recommended Annual Income</div>
+                            <div class="salary-amount" id="recommendedSalary">$0</div>
+                            <div class="salary-note">before taxes</div>
+                        </div>
+                        
+                        <div class="salary-metrics">
+                            <div class="salary-metric">
+                                <div class="metric-label">Monthly Housing Cost</div>
+                                <div class="metric-value" id="monthlyHousingCost">$0</div>
+                            </div>
+                            <div class="salary-metric">
+                                <div class="metric-label">Housing Cost Ratio</div>
+                                <div class="metric-value" id="housingCostRatio">28%</div>
+                                <div class="metric-note">of gross income</div>
+                            </div>
+                            <div class="salary-metric">
+                                <div class="metric-label">Monthly Take-Home Pay</div>
+                                <div class="metric-value" id="takeHomePay">$0</div>
+                                <div class="metric-note">after estimated taxes</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="salary-explanation">
+                        <h4>Why This Matters</h4>
+                        <p>Financial experts typically recommend that your total housing costs shouldn't exceed 28% of your gross monthly income. This ensures you can comfortably afford your investment while maintaining financial stability for other expenses and savings goals.</p>
+                        
+                        <h4>What's Included</h4>
+                        <ul>
+                            <li><strong>Monthly Housing Cost:</strong> Mortgage payment + property tax + HOA fees + insurance + maintenance</li>
+                            <li><strong>Take-Home Pay:</strong> Estimated after applying typical tax rates (varies by location)</li>
+                        </ul>
+                        
+                        <div class="salary-note-block">
+                            <p><strong>Note:</strong> This is a simplified estimate. Your actual situation may vary based on your tax situation, other debts, and personal financial goals. Consider consulting with a financial advisor for personalized guidance.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1094,9 +1699,52 @@
             calculateInvestment();
             calculateSP500();
             compareInvestments();
+            calculateSalaryRecommendation();
+            updateSummary(); // Add this line to update the summary tab
             
             // Auto-resize columns after calculations are done
             autoResizeColumns();
+        }
+        
+        function calculateSalaryRecommendation() {
+            // Get the first year property costs
+            const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
+            const downPaymentPercent = parseFloat(document.getElementById('downPaymentPercent').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const loanTerm = parseInt(document.getElementById('loanTerm').value);
+            const propertyTaxRate = parseFloat(document.getElementById('propertyTaxRate').value);
+            const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value);
+            const hoaAnnual = parseFloat(document.getElementById('hoaAnnual').value);
+            const insuranceRate = parseFloat(document.getElementById('insuranceRate').value);
+            
+            // Calculate mortgage payment
+            const loanAmount = purchasePrice * (1 - downPaymentPercent / 100);
+            const monthlyMortgagePayment = calculateMonthlyPayment(loanAmount, interestRate, loanTerm);
+            
+            // Calculate monthly costs
+            const monthlyPropertyTax = (purchasePrice * propertyTaxRate / 100) / 12;
+            const monthlyMaintenance = (purchasePrice * maintenanceRate / 100) / 12;
+            const monthlyHOA = hoaAnnual / 12;
+            const monthlyInsurance = (purchasePrice * insuranceRate / 100) / 12;
+            
+            // Calculate total monthly housing cost
+            const totalMonthlyHousingCost = monthlyMortgagePayment + monthlyPropertyTax + monthlyMaintenance + monthlyHOA + monthlyInsurance;
+            
+            // Housing cost should be 28% of gross monthly income (standard affordability rule)
+            const housingCostRatio = 0.28; // 28%
+            const recommendedMonthlyIncome = totalMonthlyHousingCost / housingCostRatio;
+            const recommendedAnnualIncome = recommendedMonthlyIncome * 12;
+            
+            // Estimate take-home pay (after taxes, simplified calculation)
+            // Approximate tax rates: federal 22%, state 5%, FICA 7.65%
+            const estimatedTaxRate = 0.3465; // ~34.65% combined tax
+            const monthlyTakeHomePay = recommendedMonthlyIncome * (1 - estimatedTaxRate);
+            
+            // Update the salary recommendation tab
+            document.getElementById('recommendedSalary').innerText = formatCurrency(recommendedAnnualIncome);
+            document.getElementById('monthlyHousingCost').innerText = formatCurrency(totalMonthlyHousingCost);
+            document.getElementById('housingCostRatio').innerText = (housingCostRatio * 100).toFixed(2) + '%';
+            document.getElementById('takeHomePay').innerText = formatCurrency(monthlyTakeHomePay);
         }
 
         // Function to automatically resize columns based on content
@@ -1487,6 +2135,106 @@
             if (table.id === 'resultTable') {
                 // The Net Position column might have moved, update the comparison function
                 compareInvestments();
+            }
+        }
+
+        function updateSummary() {
+            // Get input values
+            const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
+            const downPaymentPercent = parseFloat(document.getElementById('downPaymentPercent').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const loanTerm = parseInt(document.getElementById('loanTerm').value);
+            const propertyTaxRate = parseFloat(document.getElementById('propertyTaxRate').value);
+            const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value);
+            const hoaAnnual = parseFloat(document.getElementById('hoaAnnual').value);
+            const insuranceRate = parseFloat(document.getElementById('insuranceRate').value);
+            const analysisYears = parseInt(document.getElementById('analysisYears').value);
+            
+            // Calculate loan and payment details
+            const downPayment = purchasePrice * (downPaymentPercent / 100);
+            const loanAmount = purchasePrice - downPayment;
+            const monthlyMortgagePayment = calculateMonthlyPayment(loanAmount, interestRate, loanTerm);
+            const annualMortgagePayment = monthlyMortgagePayment * 12;
+            
+            // Calculate monthly costs
+            const monthlyPropertyTax = (purchasePrice * propertyTaxRate / 100) / 12;
+            const monthlyMaintenance = (purchasePrice * maintenanceRate / 100) / 12;
+            const monthlyHOA = hoaAnnual / 12;
+            const monthlyInsurance = (purchasePrice * insuranceRate / 100) / 12;
+            
+            // Calculate total monthly housing cost
+            const totalMonthlyHousingCost = monthlyMortgagePayment + monthlyPropertyTax + monthlyMaintenance + monthlyHOA + monthlyInsurance;
+            const totalAnnualHousingCost = totalMonthlyHousingCost * 12;
+            
+            // Update Property Cost Breakdown section
+            document.getElementById('summary-monthly-mortgage').textContent = formatCurrency(monthlyMortgagePayment);
+            document.getElementById('summary-monthly-tax').textContent = formatCurrency(monthlyPropertyTax);
+            document.getElementById('summary-monthly-hoa').textContent = formatCurrency(monthlyHOA);
+            document.getElementById('summary-monthly-insurance').textContent = formatCurrency(monthlyInsurance);
+            document.getElementById('summary-monthly-maintenance').textContent = formatCurrency(monthlyMaintenance);
+            document.getElementById('summary-monthly-total').textContent = formatCurrency(totalMonthlyHousingCost);
+            
+            document.getElementById('summary-annual-mortgage').textContent = formatCurrency(annualMortgagePayment);
+            document.getElementById('summary-annual-tax').textContent = formatCurrency(monthlyPropertyTax * 12);
+            document.getElementById('summary-annual-hoa').textContent = formatCurrency(hoaAnnual);
+            document.getElementById('summary-annual-insurance').textContent = formatCurrency(monthlyInsurance * 12);
+            document.getElementById('summary-annual-maintenance').textContent = formatCurrency(monthlyMaintenance * 12);
+            document.getElementById('summary-annual-total').textContent = formatCurrency(totalAnnualHousingCost);
+            
+            // Update Property Investment Snapshot section
+            document.getElementById('summary-property-value').textContent = formatCurrency(purchasePrice);
+            document.getElementById('summary-down-payment').textContent = formatCurrency(downPayment);
+            document.getElementById('summary-loan-amount').textContent = formatCurrency(loanAmount);
+            
+            // Get year 1 equity from the property investment table
+            const resultRows = document.querySelectorAll('#resultBody tr');
+            if (resultRows.length > 1) { // Year 1 is the second row (index 1)
+                const yearOneRow = resultRows[1];
+                const yearOneEquity = parseFloat(yearOneRow.cells[3].textContent.replace(/[^0-9.-]+/g, ""));
+                document.getElementById('summary-year-one-equity').textContent = formatCurrency(yearOneEquity);
+            }
+            
+            // Update Income Recommendation section
+            const recommendedAnnualSalary = parseFloat(document.getElementById('recommendedSalary').textContent.replace(/[^0-9.-]+/g, ""));
+            const monthlyHousingCost = parseFloat(document.getElementById('monthlyHousingCost').textContent.replace(/[^0-9.-]+/g, ""));
+            const housingCostRatio = document.getElementById('housingCostRatio').textContent;
+            const monthlyTakeHome = parseFloat(document.getElementById('takeHomePay').textContent.replace(/[^0-9.-]+/g, ""));
+            
+            document.getElementById('summary-recommended-salary').textContent = formatCurrency(recommendedAnnualSalary);
+            document.getElementById('summary-monthly-cost').textContent = formatCurrency(monthlyHousingCost);
+            document.getElementById('summary-cost-ratio').textContent = housingCostRatio;
+            document.getElementById('summary-take-home').textContent = formatCurrency(monthlyTakeHome);
+            
+            // Update Investment Comparison section
+            document.getElementById('summary-comparison-year').textContent = analysisYears;
+            
+            // Get final year values from comparison table
+            const comparisonRows = document.querySelectorAll('#comparisonBody tr');
+            if (comparisonRows.length >= analysisYears) {
+                const finalYearRow = comparisonRows[analysisYears];
+                
+                if (finalYearRow) {
+                    const propertyPosition = parseFloat(finalYearRow.cells[1].textContent.replace(/[^0-9.-]+/g, ""));
+                    const sp500Value = parseFloat(finalYearRow.cells[2].textContent.replace(/[^0-9.-]+/g, ""));
+                    const difference = parseFloat(finalYearRow.cells[3].textContent.replace(/[^0-9.-]+/g, ""));
+                    const winner = finalYearRow.cells[4].textContent.trim();
+                    
+                    document.getElementById('summary-property-position').textContent = formatCurrency(propertyPosition);
+                    document.getElementById('summary-sp500-value').textContent = formatCurrency(sp500Value);
+                    
+                    const absDifference = Math.abs(difference);
+                    let winnerText = '';
+                    
+                    if (difference > 0) {
+                        winnerText = `Property wins by ${formatCurrency(absDifference)}`;
+                        document.getElementById('summary-winner').className = 'winner-badge property-winner';
+                    } else {
+                        winnerText = `S&P 500 wins by ${formatCurrency(absDifference)}`;
+                        document.getElementById('summary-winner').className = 'winner-badge sp500-winner';
+                    }
+                    
+                    document.getElementById('summary-winner').textContent = winnerText;
+                }
             }
         }
     </script>
