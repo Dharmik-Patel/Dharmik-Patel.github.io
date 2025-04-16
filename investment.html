@@ -2,7 +2,9 @@
 <html>
 <head>
     <title>Property Investment Calculator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -190,7 +192,7 @@
             border: none;
             border-radius: var(--radius);
             cursor: pointer;
-            transition: var(--transition);
+            transition: var (--transition);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -269,83 +271,34 @@
 
         .table-container {
             width: 100%;
-            height: 100%;
             overflow-x: auto;
             margin-top: 1rem;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            position: relative;
         }
 
         table {
-            width: 100%;
-            table-layout: fixed;
+            width: max-content;  /* Allow table to be as wide as needed */
+            min-width: 100%;     /* But at least as wide as container */
+            table-layout: fixed; /* Use fixed layout for consistent sizing */
             border-collapse: separate;
             border-spacing: 0;
             font-size: 0.875rem;
             background-color: white;
-            min-width: 1200px;  /* Ensures all columns are visible */
         }
 
-        /* Column resizing */
-        .resizable {
-            position: relative;
-        }
-
-        .resizer {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 5px;
-            height: 100%;
-            background-color: var(--neutral-300);
-            cursor: col-resize;
-            user-select: none;
-            touch-action: none;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        th:hover .resizer {
-            opacity: 1;
-        }
-
-        /* Column moving styles */
         th {
-            font-weight: 600;
-            background-color: var(--neutral-100);
-            color: var(--neutral-700);
             position: sticky;
             top: 0;
             z-index: 1;
+            font-weight: 600;
+            background-color: var(--neutral-100);
+            color: var(--neutral-700);
             padding: 0.75rem 1rem;
             text-align: right;
             border-bottom: 1px solid var(--neutral-200);
-            min-width: 80px; /* Minimum column width */
-            cursor: grab;
-            user-select: none;
-        }
-
-        th.dragging {
-            opacity: 0.7;
-            cursor: grabbing;
-            background-color: var(--primary-light);
-        }
-        
-        th.drop-target {
-            border-left: 2px solid var(--primary-color);
-        }
-
-        th:active {
-            cursor: grabbing;
-        }
-
-        /* Drag indicator */
-        .drag-indicator {
-            margin-right: 0.5rem;
-            opacity: 0.5;
-            font-size: 0.75rem;
-            float: left;
+            white-space: nowrap;
+            overflow: visible;
         }
 
         td {
@@ -353,16 +306,23 @@
             text-align: right;
             border-bottom: 1px solid var(--neutral-200);
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            overflow: visible;
         }
 
-        tbody tr:last-child td {
-            border-bottom: none;
+        /* Resize handles for columns */
+        .resizer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 10px;
+            height: 100%;
+            cursor: col-resize;
+            z-index: 10;
         }
 
-        tbody tr:hover {
-            background-color: var(--neutral-50);
+        .resizer:hover, .resizing .resizer {
+            background-color: var(--primary-color);
+            opacity: 0.4;
         }
 
         .positive {
@@ -440,6 +400,111 @@
             padding: 1rem;
             background-color: rgba(255, 255, 255, 0.5);
             border-radius: var(--radius);
+        }
+
+        /* iOS Safari specific styles */
+        @supports (-webkit-touch-callout: none) {
+            /* Target iOS devices */
+            input, select, textarea {
+                font-size: 16px; /* Prevent zoom on focus */
+            }
+            
+            /* Add safe area insets for notched devices */
+            body {
+                padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            }
+            
+            /* Better touch targets for iOS */
+            button, .tab-button {
+                min-height: 44px;
+            }
+            
+            .resizer {
+                width: 20px; /* Wider touch target for column resizing */
+            }
+        }
+        
+        /* Enhanced mobile styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .compact-inputs {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .card {
+                padding: 1.25rem;
+            }
+
+            .comparison-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+
+            .comparison-item:first-child {
+                grid-column: span 2;
+            }
+
+            .container {
+                padding: 0 0.5rem;
+                width: 100%;
+                overflow-x: hidden;
+            }
+            
+            .card {
+                border-radius: var(--radius-md);
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                justify-content: flex-start;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Hide scrollbar for Firefox */
+            }
+            
+            .tabs::-webkit-scrollbar {
+                display: none; /* Hide scrollbar for Chrome/Safari */
+            }
+            
+            .tab-button {
+                padding: 0.75rem 1rem;
+            }
+            
+            /* Optimize table scrolling for mobile */
+            .table-container {
+                -webkit-overflow-scrolling: touch;
+                margin-top: 0.5rem;
+                border-radius: var(--radius-sm);
+            }
+            
+            table {
+                font-size: 0.8rem;
+            }
+            
+            th, td {
+                padding: 0.5rem;
+            }
+            
+            /* Ensure inputs are easy to tap */
+            input {
+                padding: 0.75rem;
+                margin-bottom: 0.25rem;
+            }
+            
+            /* Make action buttons full-width on small screens */
+            .action-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .action-buttons button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -600,13 +665,6 @@
             </div>
             
             <div id="comparisonTab" class="tab-content">
-                <div class="comparison-row">
-                    <div class="comparison-item">Year</div>
-                    <div class="comparison-item">Property Net Position</div>
-                    <div class="comparison-item">S&P 500 Value</div>
-                    <div class="comparison-item">Difference</div>
-                    <div class="comparison-item">Better Investment</div>
-                </div>
                 <div class="table-container">
                     <table id="comparisonTable">
                         <thead>
@@ -884,6 +942,100 @@
             document.body.removeChild(link);
         }
         
+        // Function to handle mobile touch interactions
+        function setupMobileTouchHandlers() {
+            // Disable drag on mobile
+            if ('ontouchstart' in window) {
+                // Remove draggable attributes
+                document.querySelectorAll('th').forEach(th => {
+                    th.removeAttribute('draggable');
+                });
+                
+                // Add touch handlers for column resizing
+                document.querySelectorAll('.resizer').forEach(resizer => {
+                    resizer.addEventListener('touchstart', touchStartHandler, { passive: false });
+                });
+                
+                // Add touch scroll momentum for table containers
+                document.querySelectorAll('.table-container').forEach(container => {
+                    container.style.WebkitOverflowScrolling = 'touch';
+                });
+                
+                // Fix input issues on iOS Safari
+                document.querySelectorAll('input').forEach(input => {
+                    // Prevent zoom on focus
+                    input.style.fontSize = '16px';
+                    
+                    // Handle numeric inputs better on iOS
+                    if (input.type === 'number') {
+                        // On focus, switch to tel for better numeric keyboard on iOS
+                        input.addEventListener('focus', function() {
+                            this.type = 'tel';
+                        });
+                        
+                        // Switch back to number on blur
+                        input.addEventListener('blur', function() {
+                            this.type = 'number';
+                        });
+                    }
+                });
+            }
+        }
+        
+        function touchStartHandler(e) {
+            e.preventDefault(); // Prevent default touch behavior
+            
+            const resizer = e.target;
+            const header = resizer.parentElement;
+            const table = header.closest('table');
+            const startX = e.touches[0].clientX;
+            const headerWidth = parseInt(window.getComputedStyle(header).width, 10);
+            
+            // Find column index
+            const headerRow = header.parentElement;
+            const headers = Array.from(headerRow.children);
+            const colIndex = headers.indexOf(header);
+            
+            // Add resizing class
+            header.classList.add('resizing');
+            
+            // Touch move handler
+            function touchMoveHandler(e) {
+                const dx = e.touches[0].clientX - startX;
+                const newWidth = Math.max(100, headerWidth + dx);
+                
+                // Apply new width
+                header.style.width = `${newWidth}px`;
+                header.style.minWidth = `${newWidth}px`;
+                
+                // Apply width to all cells in this column
+                const rows = table.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    if (colIndex < row.cells.length) {
+                        const cell = row.cells[colIndex];
+                        cell.style.width = `${newWidth}px`;
+                        cell.style.minWidth = `${newWidth}px`;
+                    }
+                });
+                
+                e.preventDefault(); // Prevent scrolling during resize
+            }
+            
+            // Touch end handler
+            function touchEndHandler() {
+                // Remove resizing class
+                header.classList.remove('resizing');
+                
+                // Remove event listeners
+                document.removeEventListener('touchmove', touchMoveHandler);
+                document.removeEventListener('touchend', touchEndHandler);
+            }
+            
+            // Add event listeners
+            document.addEventListener('touchmove', touchMoveHandler, { passive: false });
+            document.addEventListener('touchend', touchEndHandler);
+        }
+
         // Calculate on page load
         window.onload = function() {
             // Sync initial values
@@ -896,8 +1048,8 @@
             // Setup resizable columns
             setupResizableColumns();
             
-            // Setup draggable columns
-            setupDraggableColumns();
+            // Handle mobile-specific behaviors
+            setupMobileTouchHandlers();
             
             // Add event listeners to sync values when property inputs change
             document.getElementById('purchasePrice').addEventListener('change', function() {
@@ -914,6 +1066,14 @@
             document.getElementById('maintenanceRate').addEventListener('change', syncSP500AnnualContribution);
             document.getElementById('hoaAnnual').addEventListener('change', syncSP500AnnualContribution);
             document.getElementById('insuranceRate').addEventListener('change', syncSP500AnnualContribution);
+            
+            // Ensure smooth scrolling on iOS Safari
+            if ('ontouchstart' in window) {
+                // Add momentum scrolling style directly to elements
+                document.querySelectorAll('.table-container').forEach(el => {
+                    el.style.WebkitOverflowScrolling = 'touch';
+                });
+            }
         }
 
         function openTab(evt, tabName) {
@@ -934,6 +1094,78 @@
             calculateInvestment();
             calculateSP500();
             compareInvestments();
+            
+            // Auto-resize columns after calculations are done
+            autoResizeColumns();
+        }
+
+        // Function to automatically resize columns based on content
+        function autoResizeColumns() {
+            // For each table in the document
+            document.querySelectorAll('table').forEach(table => {
+                const headers = table.querySelectorAll('th');
+                const rows = table.querySelectorAll('tbody tr');
+                
+                // Process each column
+                headers.forEach((header, colIndex) => {
+                    // Start by measuring the header text
+                    const headerContent = header.textContent.trim();
+                    
+                    // Create a temporary element to measure text width accurately
+                    const tempSpan = document.createElement('span');
+                    tempSpan.style.visibility = 'hidden';
+                    tempSpan.style.position = 'absolute';
+                    tempSpan.style.whiteSpace = 'nowrap';
+                    tempSpan.style.font = window.getComputedStyle(header).font;
+                    tempSpan.textContent = headerContent;
+                    document.body.appendChild(tempSpan);
+                    
+                    // Start with header width (plus padding for sort icons, etc.)
+                    let maxWidth = tempSpan.offsetWidth + 40;
+                    document.body.removeChild(tempSpan);
+                    
+                    // Check all cells in this column for longer content
+                    rows.forEach(row => {
+                        if (colIndex < row.cells.length) {
+                            const cell = row.cells[colIndex];
+                            const cellContent = cell.textContent.trim();
+                            
+                            // Measure the actual text width
+                            const cellSpan = document.createElement('span');
+                            cellSpan.style.visibility = 'hidden';
+                            cellSpan.style.position = 'absolute';
+                            cellSpan.style.whiteSpace = 'nowrap';
+                            cellSpan.style.font = window.getComputedStyle(cell).font;
+                            cellSpan.textContent = cellContent;
+                            document.body.appendChild(cellSpan);
+                            
+                            // Update maxWidth if this cell is wider
+                            const cellWidth = cellSpan.offsetWidth + 20; // Add padding
+                            if (cellWidth > maxWidth) {
+                                maxWidth = cellWidth;
+                            }
+                            
+                            document.body.removeChild(cellSpan);
+                        }
+                    });
+                    
+                    // Set minimum width to ensure usability
+                    maxWidth = Math.max(maxWidth, 80);
+                    
+                    // Apply the calculated width to the header and all cells in this column
+                    header.style.width = `${maxWidth}px`;
+                    header.style.minWidth = `${maxWidth}px`;
+                    
+                    // Apply the same width to all cells in this column
+                    rows.forEach(row => {
+                        if (colIndex < row.cells.length) {
+                            const cell = row.cells[colIndex];
+                            cell.style.width = `${maxWidth}px`;
+                            cell.style.minWidth = `${maxWidth}px`;
+                        }
+                    });
+                });
+            });
         }
 
         function calculateSP500() {
@@ -1096,14 +1328,37 @@
                 
                 // Prevent text selection while dragging
                 e.preventDefault();
+                e.stopPropagation(); // Stop event from reaching the header's drag handler
             }
 
             function mouseMoveHandler(e) {
                 // Calculate the width change
                 const dx = e.clientX - x;
                 
+                // Don't allow columns to be too narrow
+                const newWidth = Math.max(100, w + dx);
+                
                 // Update the width of the header
-                header.style.width = `${w + dx}px`;
+                header.style.width = `${newWidth}px`;
+                header.style.minWidth = `${newWidth}px`;
+                
+                // Find column index
+                const headerRow = header.parentElement;
+                const headers = Array.from(headerRow.children);
+                const colIndex = headers.indexOf(header);
+                
+                // Also update all cells in the same column
+                const table = header.closest('table');
+                if (table) {
+                    const rows = table.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        if (colIndex < row.cells.length) {
+                            const cell = row.cells[colIndex];
+                            cell.style.width = `${newWidth}px`;
+                            cell.style.minWidth = `${newWidth}px`;
+                        }
+                    });
+                }
             }
 
             function mouseUpHandler() {
