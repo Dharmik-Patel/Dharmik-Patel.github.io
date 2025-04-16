@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Property Investment Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-light: #e0e7ff;
+            --primary-dark: #3730a3;
+            --secondary-color: #06b6d4;
+            --secondary-light: #cffafe;
+            --secondary-dark: #0e7490;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --bg-color: #f5f8ff;
+            --card-bg: #ffffff;
+            --card-header-bg: #f3f4f6;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-400: #9ca3af;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-700: #374151;
+            --neutral-800: #1f2937;
+            --neutral-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-sm: 0.25rem;
+            --radius: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --transition: all 0.2s ease-in-out;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--neutral-800);
+            background-color: var(--bg-color);
+            background-image: linear-gradient(120deg, #f5f8ff 0%, #e8efff 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: none;
+        }
+
+        .subheading {
+            font-size: 1.125rem;
+            color: var (--neutral-600);
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--neutral-200);
+        }
+
+        .input-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            background-color: var(--card-header-bg);
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius);
+        }
+
+        .input-section-icon {
+            margin-right: 0.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+        }
+
+        .compact-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--neutral-700);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            font-size: 0.95rem;
+            border: 1px solid var(--neutral-300);
+            border-radius: var(--radius);
+            background-color: white;
+            transition: var(--transition);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        button.primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3);
+        }
+
+        button.primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(79, 70, 229, 0.4);
+        }
+
+        button.secondary {
+            background-color: var(--secondary-color);
+            color: white;
+            box-shadow: 0 2px 4px rgba(6, 182, 212, 0.3);
+        }
+
+        button.secondary:hover {
+            background-color: var(--secondary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(6, 182, 212, 0.4);
+        }
+
+        /* Tab styles */
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--neutral-200);
+            background-color: var(--neutral-50);
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            padding: 0 0.5rem;
+        }
+
+        .tab-button {
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--neutral-600);
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            border-radius: 0;
+            cursor: pointer;
+            transition: var (--transition);
+        }
+
+        .tab-button:hover {
+            color: var(--primary-color);
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .table-container {
+            width: 100%;
+            height: 100%;
+            overflow-x: auto;
+            margin-top: 1rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.875rem;
+            background-color: white;
+            min-width: 1200px;  /* Ensures all columns are visible */
+        }
+
+        /* Column resizing */
+        .resizable {
+            position: relative;
+        }
+
+        .resizer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--neutral-300);
+            cursor: col-resize;
+            user-select: none;
+            touch-action: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        th:hover .resizer {
+            opacity: 1;
+        }
+
+        /* Column moving styles */
+        th {
+            font-weight: 600;
+            background-color: var(--neutral-100);
+            color: var(--neutral-700);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            padding: 0.75rem 1rem;
+            text-align: right;
+            border-bottom: 1px solid var(--neutral-200);
+            min-width: 80px; /* Minimum column width */
+            cursor: grab;
+            user-select: none;
+        }
+
+        th.dragging {
+            opacity: 0.7;
+            cursor: grabbing;
+            background-color: var(--primary-light);
+        }
+        
+        th.drop-target {
+            border-left: 2px solid var(--primary-color);
+        }
+
+        th:active {
+            cursor: grabbing;
+        }
+
+        /* Drag indicator */
+        .drag-indicator {
+            margin-right: 0.5rem;
+            opacity: 0.5;
+            font-size: 0.75rem;
+            float: left;
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            text-align: right;
+            border-bottom: 1px solid var(--neutral-200);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background-color: var(--neutral-50);
+        }
+
+        .positive {
+            color: var(--success-color);
+            font-weight: 500;
+        }
+
+        .negative {
+            color: var(--danger-color);
+            font-weight: 500;
+        }
+
+        .highlight {
+            background-color: rgba(79, 70, 229, 0.08);
+        }
+
+        .highlight:hover {
+            background-color: rgba(79, 70, 229, 0.12);
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            border-radius: var(--radius);
+            font-weight: 600;
+        }
+
+        .comparison-item {
+            text-align: center;
+        }
+
+        /* Icons */
+        .icon {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            stroke-width: 0;
+            stroke: currentColor;
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .compact-inputs {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .card {
+                padding: 1.25rem;
+            }
+
+            .comparison-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+
+            .comparison-item:first-child {
+                grid-column: span 2;
+            }
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: var(--neutral-500);
+            font-size: 0.875rem;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Property Investment Calculator</h1>
+            <p class="subheading">Compare real estate investment with S&P 500 returns over time</p>
+        </header>
+        
+        <div class="card">
+            <div class="input-section">
+                <div class="input-section-header">
+                    <div class="input-section-icon">🏠</div>
+                    <h2>Property Investment Parameters</h2>
+                </div>
+                <div class="compact-inputs">
+                    <div class="input-group">
+                        <label for="purchasePrice">Purchase Price ($)</label>
+                        <input type="number" id="purchasePrice" value="100000">
+                    </div>
+                    <div class="input-group">
+                        <label for="downPaymentPercent">Down Payment (%)</label>
+                        <input type="number" id="downPaymentPercent" value="20" min="0" max="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="interestRate">Interest Rate (%)</label>
+                        <input type="number" id="interestRate" value="6" step="0.01" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="loanTerm">Loan Term (years)</label>
+                        <input type="number" id="loanTerm" value="30" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="appreciationRate">Annual Appreciation (%)</label>
+                        <input type="number" id="appreciationRate" value="7" step="0.1" min="-20" max="20">
+                    </div>
+                    <div class="input-group">
+                        <label for="propertyTaxRate">Property Tax Rate (%)</label>
+                        <input type="number" id="propertyTaxRate" value="1.25" step="0.01" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="maintenanceRate">Maintenance Rate (%)</label>
+                        <input type="number" id="maintenanceRate" value="1" step="0.01" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="hoaAnnual">Annual HOA ($)</label>
+                        <input type="number" id="hoaAnnual" value="7200" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="insuranceRate">Insurance Rate (%)</label>
+                        <input type="number" id="insuranceRate" value="0.5" step="0.01" min="0">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-section">
+                <div class="input-section-header">
+                    <div class="input-section-icon">📈</div>
+                    <h2>S&P 500 Investment Parameters</h2>
+                </div>
+                <div class="compact-inputs">
+                    <div class="input-group">
+                        <label for="sp500InitialInvestment">Initial Investment ($)</label>
+                        <input type="number" id="sp500InitialInvestment" value="660000">
+                    </div>
+                    <div class="input-group">
+                        <label for="sp500AnnualContribution">Annual Contribution ($)</label>
+                        <input type="number" id="sp500AnnualContribution" value="158400">
+                    </div>
+                    <div class="input-group">
+                        <label for="sp500GrowthRate">Annual Growth Rate (%)</label>
+                        <input type="number" id="sp500GrowthRate" value="9" step="0.1" min="0" max="20">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-section">
+                <div class="input-section-header">
+                    <div class="input-section-icon">⚙️</div>
+                    <h2>Analysis Settings</h2>
+                </div>
+                <div class="compact-inputs">
+                    <div class="input-group">
+                        <label for="analysisYears">Analysis Period (years)</label>
+                        <input type="number" id="analysisYears" value="30" min="1" max="50">
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="primary" onclick="calculateAll()">
+                        <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M19 8l-7 7-7-7"></path>
+                        </svg>
+                        Calculate Investment
+                    </button>
+                    <button class="secondary" onclick="downloadCSV()">
+                        <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+                        </svg>
+                        Download as CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'propertyTab')">Property Investment</button>
+                <button class="tab-button" onclick="openTab(event, 'sp500Tab')">S&P 500 Investment</button>
+                <button class="tab-button" onclick="openTab(event, 'comparisonTab')">Comparison</button>
+            </div>
+            
+            <div id="propertyTab" class="tab-content active">
+                <div class="table-container">
+                    <table id="resultTable">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Property Value</th>
+                                <th>Mortgage Balance</th>
+                                <th>Equity</th>
+                                <th>Mortgage Payment</th>
+                                <th>Property Tax</th>
+                                <th>Maintenance</th>
+                                <th>HOA</th>
+                                <th>Insurance</th>
+                                <th>Total Annual Costs</th>
+                                <th>Cumulative Costs</th>
+                                <th>Net Position</th>
+                                <th>Break Even?</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultBody">
+                            <!-- Results will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="sp500Tab" class="tab-content">
+                <div class="table-container">
+                    <table id="sp500Table">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Initial Investment</th>
+                                <th>Annual Contribution</th>
+                                <th>Annual Return</th>
+                                <th>Cumulative Return</th>
+                                <th>Total Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sp500Body">
+                            <!-- S&P 500 results will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="comparisonTab" class="tab-content">
+                <div class="comparison-row">
+                    <div class="comparison-item">Year</div>
+                    <div class="comparison-item">Property Net Position</div>
+                    <div class="comparison-item">S&P 500 Value</div>
+                    <div class="comparison-item">Difference</div>
+                    <div class="comparison-item">Better Investment</div>
+                </div>
+                <div class="table-container">
+                    <table id="comparisonTable">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Property Net Position</th>
+                                <th>S&P 500 Value</th>
+                                <th>Difference</th>
+                                <th>Better Investment</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparisonBody">
+                            <!-- Comparison results will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Investment Calculator © 2025 | All calculations are estimates and should not be considered financial advice.</p>
+        </footer>
+    </div>
+    <script>
+        function formatCurrency(value) {
+            return '$' + parseFloat(value).toLocaleString('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+        }
+
+        function calculateMonthlyPayment(principal, interestRate, termYears) {
+            const monthlyRate = interestRate / 100 / 12;
+            const payments = termYears * 12;
+            return principal * monthlyRate * Math.pow(1 + monthlyRate, payments) / (Math.pow(1 + monthlyRate, payments) - 1);
+        }
+
+        function calculateRemainingBalance(principal, interestRate, termYears, yearsPaid) {
+            const monthlyRate = interestRate / 100 / 12;
+            const totalPayments = termYears * 12;
+            const paymentsMade = yearsPaid * 12;
+            const monthlyPayment = calculateMonthlyPayment(principal, interestRate, termYears);
+            
+            let balance = principal;
+            for (let i = 0; i < paymentsMade; i++) {
+                const interestPayment = balance * monthlyRate;
+                const principalPayment = monthlyPayment - interestPayment;
+                balance -= principalPayment;
+            }
+            return Math.max(0, balance);
+        }
+
+        function calculateInvestment() {
+            // Get input values
+            const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
+            const downPaymentPercent = parseFloat(document.getElementById('downPaymentPercent').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const loanTerm = parseInt(document.getElementById('loanTerm').value);
+            const appreciationRate = parseFloat(document.getElementById('appreciationRate').value);
+            const propertyTaxRate = parseFloat(document.getElementById('propertyTaxRate').value);
+            const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value);
+            const hoaAnnual = parseFloat(document.getElementById('hoaAnnual').value);
+            const insuranceRate = parseFloat(document.getElementById('insuranceRate').value);
+            const analysisYears = parseInt(document.getElementById('analysisYears').value);
+            
+            // Calculate initial values
+            const downPayment = purchasePrice * (downPaymentPercent / 100);
+            const loanAmount = purchasePrice - downPayment;
+            const monthlyPayment = calculateMonthlyPayment(loanAmount, interestRate, loanTerm);
+            const annualPayment = monthlyPayment * 12;
+            
+            // Results array
+            const results = [];
+            let cumulativeCosts = downPayment;
+            let breakEvenYear = null;
+            
+            // Calculate year 0
+            results.push({
+                year: 0,
+                propertyValue: purchasePrice,
+                mortgageBalance: loanAmount,
+                equity: downPayment,
+                mortgagePayment: 0,
+                propertyTax: 0,
+                maintenance: 0,
+                hoa: 0,
+                insurance: 0,
+                annualCosts: downPayment,
+                cumulativeCosts: downPayment,
+                netPosition: 0,
+                breakEven: false
+            });
+            
+            // Calculate for subsequent years
+            for (let year = 1; year <= analysisYears; year++) {
+                const previousYear = results[year - 1];
+                const propertyValue = previousYear.propertyValue * (1 + appreciationRate / 100);
+                const mortgageBalance = calculateRemainingBalance(loanAmount, interestRate, loanTerm, year);
+                const equity = propertyValue - mortgageBalance;
+                
+                // Calculate annual costs
+                const propertyTax = propertyValue * (propertyTaxRate / 100);
+                const maintenance = propertyValue * (maintenanceRate / 100);
+                const insurance = propertyValue * (insuranceRate / 100);
+                
+                const annualCosts = annualPayment + propertyTax + maintenance + hoaAnnual + insurance;
+                cumulativeCosts += annualCosts;
+                
+                // Calculate net position (equity minus cumulative costs)
+                const netPosition = equity - cumulativeCosts;
+                const breakEven = netPosition > 0;
+                
+                // Record break-even year if applicable
+                if (breakEven && breakEvenYear === null) {
+                    breakEvenYear = year;
+                }
+                
+                results.push({
+                    year: year,
+                    propertyValue: propertyValue,
+                    mortgageBalance: mortgageBalance,
+                    equity: equity,
+                    mortgagePayment: annualPayment,
+                    propertyTax: propertyTax,
+                    maintenance: maintenance,
+                    hoa: hoaAnnual,
+                    insurance: insurance,
+                    annualCosts: annualCosts,
+                    cumulativeCosts: cumulativeCosts,
+                    netPosition: netPosition,
+                    breakEven: breakEven
+                });
+            }
+            
+            // Display results
+            displayResults(results, breakEvenYear);
+        }
+        
+        function displayResults(results, breakEvenYear) {
+            const tbody = document.getElementById('resultBody');
+            tbody.innerHTML = '';
+            
+            results.forEach(row => {
+                const tr = document.createElement('tr');
+                if (row.year === breakEvenYear) {
+                    tr.className = 'highlight';
+                }
+                
+                tr.innerHTML = `
+                    <td>${row.year}</td>
+                    <td>${formatCurrency(row.propertyValue)}</td>
+                    <td>${formatCurrency(row.mortgageBalance)}</td>
+                    <td>${formatCurrency(row.equity)}</td>
+                    <td>${formatCurrency(row.mortgagePayment)}</td>
+                    <td>${formatCurrency(row.propertyTax)}</td>
+                    <td>${formatCurrency(row.maintenance)}</td>
+                    <td>${formatCurrency(row.hoa)}</td>
+                    <td>${formatCurrency(row.insurance)}</td>
+                    <td>${formatCurrency(row.annualCosts)}</td>
+                    <td>${formatCurrency(row.cumulativeCosts)}</td>
+                    <td class="${row.netPosition >= 0 ? 'positive' : 'negative'}">${formatCurrency(row.netPosition)}</td>
+                    <td>${row.breakEven ? 'Yes' : 'No'}</td>
+                `;
+                
+                tbody.appendChild(tr);
+            });
+        }
+        
+        function downloadCSV() {
+            // Get input values
+            const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
+            const downPaymentPercent = parseFloat(document.getElementById('downPaymentPercent').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const loanTerm = parseInt(document.getElementById('loanTerm').value);
+            const appreciationRate = parseFloat(document.getElementById('appreciationRate').value);
+            const propertyTaxRate = parseFloat(document.getElementById('propertyTaxRate').value);
+            const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value);
+            const hoaAnnual = parseFloat(document.getElementById('hoaAnnual').value);
+            const insuranceRate = parseFloat(document.getElementById('insuranceRate').value);
+            const analysisYears = parseInt(document.getElementById('analysisYears').value);
+            
+            // Calculate initial values
+            const downPayment = purchasePrice * (downPaymentPercent / 100);
+            const loanAmount = purchasePrice - downPayment;
+            const monthlyPayment = calculateMonthlyPayment(loanAmount, interestRate, loanTerm);
+            const annualPayment = monthlyPayment * 12;
+            
+            // Results array for CSV
+            const csvData = [];
+            let cumulativeCosts = downPayment;
+            
+            // Add headers
+            csvData.push([
+                'Year', 
+                'Property Value', 
+                'Mortgage Balance', 
+                'Equity', 
+                'Mortgage Payment', 
+                'Property Tax', 
+                'Maintenance', 
+                'HOA', 
+                'Insurance', 
+                'Total Annual Costs', 
+                'Cumulative Costs', 
+                'Net Position', 
+                'Break Even?'
+            ]);
+            
+            // Add year 0
+            csvData.push([
+                0,
+                purchasePrice,
+                loanAmount,
+                downPayment,
+                0,
+                0,
+                0,
+                0,
+                0,
+                downPayment,
+                downPayment,
+                0,
+                'No'
+            ]);
+            
+            // Calculate for subsequent years
+            let propertyValue = purchasePrice;
+            
+            for (let year = 1; year <= analysisYears; year++) {
+                propertyValue *= (1 + appreciationRate / 100);
+                const mortgageBalance = calculateRemainingBalance(loanAmount, interestRate, loanTerm, year);
+                const equity = propertyValue - mortgageBalance;
+                
+                // Calculate annual costs
+                const propertyTax = propertyValue * (propertyTaxRate / 100);
+                const maintenance = propertyValue * (maintenanceRate / 100);
+                const insurance = propertyValue * (insuranceRate / 100);
+                
+                const annualCosts = annualPayment + propertyTax + maintenance + hoaAnnual + insurance;
+                cumulativeCosts += annualCosts;
+                
+                // Calculate net position
+                const netPosition = equity - cumulativeCosts;
+                const breakEven = netPosition > 0 ? 'Yes' : 'No';
+                
+                csvData.push([
+                    year,
+                    propertyValue.toFixed(0),
+                    mortgageBalance.toFixed(0),
+                    equity.toFixed(0),
+                    annualPayment.toFixed(0),
+                    propertyTax.toFixed(0),
+                    maintenance.toFixed(0),
+                    hoaAnnual.toFixed(0),
+                    insurance.toFixed(0),
+                    annualCosts.toFixed(0),
+                    cumulativeCosts.toFixed(0),
+                    netPosition.toFixed(0),
+                    breakEven
+                ]);
+            }
+            
+            // Generate CSV content
+            const csv = Papa.unparse(csvData);
+            
+            // Create download link
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'property_investment_analysis.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Calculate on page load
+        window.onload = function() {
+            // Sync initial values
+            syncSP500InitialInvestment();
+            syncSP500AnnualContribution();
+            
+            // Calculate results
+            calculateAll();
+            
+            // Setup resizable columns
+            setupResizableColumns();
+            
+            // Setup draggable columns
+            setupDraggableColumns();
+            
+            // Add event listeners to sync values when property inputs change
+            document.getElementById('purchasePrice').addEventListener('change', function() {
+                syncSP500InitialInvestment();
+                syncSP500AnnualContribution();
+            });
+            document.getElementById('downPaymentPercent').addEventListener('change', function() {
+                syncSP500InitialInvestment();
+                syncSP500AnnualContribution();
+            });
+            document.getElementById('interestRate').addEventListener('change', syncSP500AnnualContribution);
+            document.getElementById('loanTerm').addEventListener('change', syncSP500AnnualContribution);
+            document.getElementById('propertyTaxRate').addEventListener('change', syncSP500AnnualContribution);
+            document.getElementById('maintenanceRate').addEventListener('change', syncSP500AnnualContribution);
+            document.getElementById('hoaAnnual').addEventListener('change', syncSP500AnnualContribution);
+            document.getElementById('insuranceRate').addEventListener('change', syncSP500AnnualContribution);
+        }
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        function calculateAll() {
+            calculateInvestment();
+            calculateSP500();
+            compareInvestments();
+        }
+
+        function calculateSP500() {
+            // Get S&P 500 input values
+            const initialInvestment = parseFloat(document.getElementById('sp500InitialInvestment').value);
+            const annualContribution = parseFloat(document.getElementById('sp500AnnualContribution').value);
+            const growthRate = parseFloat(document.getElementById('sp500GrowthRate').value) / 100;
+            const analysisYears = parseInt(document.getElementById('analysisYears').value);
+
+            const results = [];
+            let cumulativeReturn = 0;
+            let totalValue = initialInvestment;
+
+            for (let year = 0; year <= analysisYears; year++) {
+                const annualReturn = totalValue * growthRate;
+                cumulativeReturn += annualReturn;
+                totalValue += annualReturn + (year > 0 ? annualContribution : 0);
+
+                results.push({
+                    year: year,
+                    initialInvestment: initialInvestment,
+                    annualContribution: year > 0 ? annualContribution : 0,
+                    annualReturn: annualReturn,
+                    cumulativeReturn: cumulativeReturn,
+                    totalValue: totalValue
+                });
+            }
+
+            displaySP500Results(results);
+            return results;
+        }
+
+        function displaySP500Results(results) {
+            const tbody = document.getElementById('sp500Body');
+            tbody.innerHTML = '';
+
+            results.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.year}</td>
+                    <td>${formatCurrency(row.initialInvestment)}</td>
+                    <td>${formatCurrency(row.annualContribution)}</td>
+                    <td>${formatCurrency(row.annualReturn)}</td>
+                    <td>${formatCurrency(row.cumulativeReturn)}</td>
+                    <td>${formatCurrency(row.totalValue)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function compareInvestments() {
+            const propertyResults = Array.from(document.getElementById('resultBody').children).map(row => ({
+                year: parseInt(row.children[0].innerText),
+                netPosition: parseFloat(row.children[11].innerText.replace(/[^0-9.-]+/g, ""))
+            }));
+
+            const sp500Results = Array.from(document.getElementById('sp500Body').children).map(row => ({
+                year: parseInt(row.children[0].innerText),
+                totalValue: parseFloat(row.children[5].innerText.replace(/[^0-9.-]+/g, ""))
+            }));
+
+            const comparisonResults = propertyResults.map((propertyResult, index) => {
+                const sp500Result = sp500Results[index];
+                const difference = propertyResult.netPosition - sp500Result.totalValue;
+                const betterInvestment = difference > 0 ? 'Property' : 'S&P 500';
+
+                return {
+                    year: propertyResult.year,
+                    propertyNetPosition: propertyResult.netPosition,
+                    sp500Value: sp500Result.totalValue,
+                    difference: difference,
+                    betterInvestment: betterInvestment
+                };
+            });
+
+            displayComparisonResults(comparisonResults);
+        }
+
+        function displayComparisonResults(results) {
+            const tbody = document.getElementById('comparisonBody');
+            tbody.innerHTML = '';
+
+            results.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.year}</td>
+                    <td>${formatCurrency(row.propertyNetPosition)}</td>
+                    <td>${formatCurrency(row.sp500Value)}</td>
+                    <td>${formatCurrency(row.difference)}</td>
+                    <td>${row.betterInvestment}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function syncSP500InitialInvestment() {
+            const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
+            const downPaymentPercent = parseFloat(document.getElementById('downPaymentPercent').value);
+            const downPayment = purchasePrice * (downPaymentPercent / 100);
+            document.getElementById('sp500InitialInvestment').value = downPayment.toFixed(0);
+        }
+
+        function syncSP500AnnualContribution() {
+            const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
+            const downPaymentPercent = parseFloat(document.getElementById('downPaymentPercent').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const loanTerm = parseInt(document.getElementById('loanTerm').value);
+            const loanAmount = purchasePrice - (purchasePrice * (downPaymentPercent / 100));
+            const monthlyPayment = calculateMonthlyPayment(loanAmount, interestRate, loanTerm);
+            const annualPayment = monthlyPayment * 12;
+            
+            // Estimate other annual costs for a reasonable contribution comparison
+            const propertyValue = purchasePrice;
+            const propertyTaxRate = parseFloat(document.getElementById('propertyTaxRate').value);
+            const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value);
+            const hoaAnnual = parseFloat(document.getElementById('hoaAnnual').value);
+            const insuranceRate = parseFloat(document.getElementById('insuranceRate').value);
+            
+            const propertyTax = propertyValue * (propertyTaxRate / 100);
+            const maintenance = propertyValue * (maintenanceRate / 100);
+            const insurance = propertyValue * (insuranceRate / 100);
+            
+            const totalAnnualCost = annualPayment + propertyTax + maintenance + hoaAnnual + insurance;
+            document.getElementById('sp500AnnualContribution').value = totalAnnualCost.toFixed(0);
+        }
+
+        function setupResizableColumns() {
+            // Add resize handles to all table headers
+            const tables = document.querySelectorAll('table');
+            tables.forEach(table => {
+                const headers = table.querySelectorAll('th');
+                headers.forEach(header => {
+                    header.classList.add('resizable');
+                    const resizer = document.createElement('div');
+                    resizer.className = 'resizer';
+                    header.appendChild(resizer);
+                    createResizableColumn(header, resizer);
+                });
+            });
+        }
+
+        function createResizableColumn(header, resizer) {
+            let x = 0;
+            let w = 0;
+
+            function mouseDownHandler(e) {
+                // Get the current mouse position
+                x = e.clientX;
+                
+                // Get the current width of the header
+                const styles = window.getComputedStyle(header);
+                w = parseInt(styles.width, 10);
+                
+                // Attach the listeners to document
+                document.addEventListener('mousemove', mouseMoveHandler);
+                document.addEventListener('mouseup', mouseUpHandler);
+                
+                // Add resizing class to header
+                header.classList.add('resizing');
+                
+                // Prevent text selection while dragging
+                e.preventDefault();
+            }
+
+            function mouseMoveHandler(e) {
+                // Calculate the width change
+                const dx = e.clientX - x;
+                
+                // Update the width of the header
+                header.style.width = `${w + dx}px`;
+            }
+
+            function mouseUpHandler() {
+                // Remove the handlers
+                document.removeEventListener('mousemove', mouseMoveHandler);
+                document.removeEventListener('mouseup', mouseUpHandler);
+                
+                // Remove resizing class
+                header.classList.remove('resizing');
+            }
+
+            // Attach the mousedown event to the resizer
+            resizer.addEventListener('mousedown', mouseDownHandler);
+        }
+
+        function setupDraggableColumns() {
+            const tables = document.querySelectorAll('table');
+            tables.forEach(table => {
+                const headers = table.querySelectorAll('th');
+                
+                // Add drag indicators and set up drag events
+                headers.forEach(header => {
+                    // Add drag indicator
+                    const headerText = header.innerHTML;
+                    header.innerHTML = `<span class="drag-indicator">⋮⋮</span>${headerText}`;
+                    
+                    // Make header draggable
+                    header.setAttribute('draggable', 'true');
+                    
+                    // Add drag event listeners
+                    header.addEventListener('dragstart', handleDragStart);
+                    header.addEventListener('dragover', handleDragOver);
+                    header.addEventListener('dragenter', handleDragEnter);
+                    header.addEventListener('dragleave', handleDragLeave);
+                    header.addEventListener('drop', handleDrop);
+                    header.addEventListener('dragend', handleDragEnd);
+                });
+            });
+        }
+        
+        let draggedColumn = null;
+        
+        function handleDragStart(e) {
+            this.classList.add('dragging');
+            draggedColumn = this;
+            
+            // Store the column index for later use
+            e.dataTransfer.setData('text/plain', Array.from(this.parentNode.children).indexOf(this));
+            
+            // Set the drag effect
+            e.dataTransfer.effectAllowed = 'move';
+        }
+        
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault(); // Necessary to allow dropping
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+        
+        function handleDragEnter(e) {
+            this.classList.add('drop-target');
+        }
+        
+        function handleDragLeave(e) {
+            this.classList.remove('drop-target');
+        }
+        
+        function handleDrop(e) {
+            e.stopPropagation(); // Stops the browser from redirecting
+            
+            // Don't do anything if dropped on the same column we're dragging
+            if (draggedColumn !== this) {
+                // Get the position of the dragged column and target column
+                const sourceTable = draggedColumn.closest('table');
+                const targetTable = this.closest('table');
+                
+                // Only allow moving columns within the same table
+                if (sourceTable === targetTable) {
+                    const headers = Array.from(draggedColumn.parentNode.children);
+                    const sourceIndex = headers.indexOf(draggedColumn);
+                    const targetIndex = headers.indexOf(this);
+                    
+                    // Perform the move by shifting all columns between source and target
+                    moveColumn(sourceTable, sourceIndex, targetIndex);
+                }
+            }
+            
+            return false;
+        }
+        
+        function handleDragEnd(e) {
+            // Clean up
+            const headers = document.querySelectorAll('th');
+            headers.forEach(header => {
+                header.classList.remove('dragging');
+                header.classList.remove('drop-target');
+            });
+        }
+        
+        function moveColumn(table, sourceIndex, targetIndex) {
+            // Ensure we have valid indices
+            if (sourceIndex === targetIndex) return;
+            
+            const rows = Array.from(table.rows);
+            
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const cellToMove = row.removeChild(cells[sourceIndex]);
+                
+                // If moving forward, insert after target
+                // If moving backward, insert before target
+                if (sourceIndex < targetIndex) {
+                    if (cells[targetIndex + 1]) {
+                        row.insertBefore(cellToMove, cells[targetIndex + 1]);
+                    } else {
+                        row.appendChild(cellToMove);
+                    }
+                } else {
+                    row.insertBefore(cellToMove, cells[targetIndex]);
+                }
+            });
+            
+            // Update the comparison function if this is the property table
+            if (table.id === 'resultTable') {
+                // The Net Position column might have moved, update the comparison function
+                compareInvestments();
+            }
+        }
+    </script>
+</body>
+</html>
