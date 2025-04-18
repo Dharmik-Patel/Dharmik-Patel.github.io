@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
     <style>
         :root {
             --primary-color: #4f46e5;
@@ -882,7 +883,7 @@
         .summary-action {
             text-align: center;
             margin-top: 1rem;
-            color: var(--neutral-600);
+            color: var (--neutral-600);
         }
         
         @media (max-width: 768px) {
@@ -900,6 +901,70 @@
                 margin: 0.5rem 0;
             }
         }
+
+        /* Graph styles */
+        .graph-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--neutral-200);
+        }
+        
+        .graph-title {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--neutral-800);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 12px;
+            border-radius: 3px;
+        }
+        
+        .legend-color.property {
+            background-color: var(--primary-color);
+        }
+        
+        .legend-color.sp500 {
+            background-color: var(--secondary-color);
+        }
+        
+        .legend-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        /* Enhanced mobile styles */
     </style>
 </head>
 <body>
@@ -1243,6 +1308,23 @@
                             <!-- Comparison results will be populated here -->
                         </tbody>
                     </table>
+                </div>
+                
+                <div class="graph-container">
+                    <h3 class="graph-title">Property vs S&P 500 Performance Over Time</h3>
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color property"></div>
+                            <div class="legend-label">Property Net Position</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color sp500"></div>
+                            <div class="legend-label">S&P 500 Value</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1879,14 +1961,16 @@
         }
 
         function compareInvestments() {
+            // Get the property net position (equity minus cumulative costs)
             const propertyResults = Array.from(document.getElementById('resultBody').children).map(row => ({
                 year: parseInt(row.children[0].innerText),
-                netPosition: parseFloat(row.children[11].innerText.replace(/[^0-9.-]+/g, ""))
+                netPosition: parseFloat(row.children[12].innerText.replace(/[^0-9.-]+/g, "")) // Using column 12 (Net Position)
             }));
 
+            // Get the S&P 500 total value
             const sp500Results = Array.from(document.getElementById('sp500Body').children).map(row => ({
                 year: parseInt(row.children[0].innerText),
-                totalValue: parseFloat(row.children[5].innerText.replace(/[^0-9.-]+/g, ""))
+                totalValue: parseFloat(row.children[5].innerText.replace(/[^0-9.-]+/g, "")) // Using column 5 (Total Value)
             }));
 
             const comparisonResults = propertyResults.map((propertyResult, index) => {
@@ -1904,6 +1988,9 @@
             });
 
             displayComparisonResults(comparisonResults);
+            
+            // After comparison is calculated, generate and display the graph
+            generateComparisonGraph(comparisonResults);
         }
 
         function displayComparisonResults(results) {
@@ -2250,6 +2337,117 @@
                     document.getElementById('summary-winner').textContent = winnerText;
                 }
             }
+        }
+
+        function generateComparisonGraph(comparisonData) {
+            // Get the canvas element
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            
+            // Extract data for the chart
+            const years = comparisonData.map(item => item.year);
+            const propertyValues = comparisonData.map(item => item.propertyNetPosition);
+            const sp500Values = comparisonData.map(item => item.sp500Value);
+            
+            // If there's an existing chart, destroy it before creating a new one
+            if (window.comparisonChart instanceof Chart) {
+                window.comparisonChart.destroy();
+            }
+            
+            // Create the chart
+            window.comparisonChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [
+                        {
+                            label: 'Property Net Position',
+                            data: propertyValues,
+                            borderColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-color'),
+                            backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-color') + '20', // 20 for opacity
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.1,
+                            pointRadius: 3
+                        },
+                        {
+                            label: 'S&P 500 Value',
+                            data: sp500Values,
+                            borderColor: getComputedStyle(document.documentElement).getPropertyValue('--secondary-color'),
+                            backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--secondary-color') + '20', // 20 for opacity
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.1,
+                            pointRadius: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += formatCurrency(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false // Hide the legend as we have a custom one
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Year'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Value ($)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    if (Math.abs(value) >= 1000000) {
+                                        return '$' + (value / 1000000).toFixed(1) + 'M';
+                                    } else if (Math.abs(value) >= 1000) {
+                                        return '$' + (value / 1000).toFixed(0) + 'K';
+                                    } else {
+                                        return '$' + value;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+            
+            // Ensure the chart is resized correctly if the comparison tab was not visible when generated
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.textContent.trim() === 'Comparison' && window.comparisonChart) {
+                        setTimeout(() => {
+                            window.comparisonChart.resize();
+                        }, 100);
+                    }
+                });
+            });
         }
     </script>
 </body>
