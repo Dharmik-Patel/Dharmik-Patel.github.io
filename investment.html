@@ -1236,6 +1236,23 @@
                                 <div class="winner-badge" id="summary-winner">S&P 500 wins by $0</div>
                             </div>
                         </div>
+                        
+                        <div class="graph-container">
+                            <h3 class="graph-title">Property vs S&P 500 Performance Over Time</h3>
+                            <div class="chart-container">
+                                <canvas id="summaryComparisonChart"></canvas>
+                            </div>
+                            <div class="legend">
+                                <div class="legend-item">
+                                    <div class="legend-color property"></div>
+                                    <div class="legend-label">Property Net Position</div>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color sp500"></div>
+                                    <div class="legend-label">S&P 500 Value</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="summary-action">
@@ -1308,23 +1325,6 @@
                             <!-- Comparison results will be populated here -->
                         </tbody>
                     </table>
-                </div>
-                
-                <div class="graph-container">
-                    <h3 class="graph-title">Property vs S&P 500 Performance Over Time</h3>
-                    <div class="chart-container">
-                        <canvas id="comparisonChart"></canvas>
-                    </div>
-                    <div class="legend">
-                        <div class="legend-item">
-                            <div class="legend-color property"></div>
-                            <div class="legend-label">Property Net Position</div>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color sp500"></div>
-                            <div class="legend-label">S&P 500 Value</div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -2341,7 +2341,7 @@
 
         function generateComparisonGraph(comparisonData) {
             // Get the canvas element
-            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            const ctx = document.getElementById('summaryComparisonChart').getContext('2d');
             
             // Extract data for the chart
             const years = comparisonData.map(item => item.year);
