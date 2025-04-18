@@ -159,7 +159,7 @@
             border: 1px solid var(--neutral-300);
             border-radius: var(--radius);
             background-color: white;
-            transition: var(--transition);
+            transition: var (--transition);
         }
 
         input:focus {
@@ -698,7 +698,7 @@
         
         .summary-card {
             background-color: white;
-            border-radius: var(--radius);
+            border-radius: var (--radius);
             padding: 1.25rem;
             box-shadow: var(--shadow-sm);
             flex: 1;
@@ -952,6 +952,10 @@
                         <label for="insuranceRate">Insurance Rate (%)</label>
                         <input type="number" id="insuranceRate" value="0.5" step="0.01" min="0">
                     </div>
+                    <div class="input-group">
+                        <label for="monthlyRental">Monthly Rental ($)</label>
+                        <input type="number" id="monthlyRental" value="0" min="0">
+                    </div>
                 </div>
             </div>
             
@@ -1189,6 +1193,7 @@
                                 <th>Maintenance</th>
                                 <th>HOA</th>
                                 <th>Insurance</th>
+                                <th>Rental Income</th>
                                 <th>Total Annual Costs</th>
                                 <th>Cumulative Costs</th>
                                 <th>Net Position</th>
@@ -1333,6 +1338,7 @@
             const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value);
             const hoaAnnual = parseFloat(document.getElementById('hoaAnnual').value);
             const insuranceRate = parseFloat(document.getElementById('insuranceRate').value);
+            const monthlyRental = parseFloat(document.getElementById('monthlyRental').value);
             const analysisYears = parseInt(document.getElementById('analysisYears').value);
             
             // Calculate initial values
@@ -1340,6 +1346,7 @@
             const loanAmount = purchasePrice - downPayment;
             const monthlyPayment = calculateMonthlyPayment(loanAmount, interestRate, loanTerm);
             const annualPayment = monthlyPayment * 12;
+            const initialAnnualRental = monthlyRental * 12;
             
             // Results array
             const results = [];
@@ -1357,6 +1364,7 @@
                 maintenance: 0,
                 hoa: 0,
                 insurance: 0,
+                rentalIncome: 0,
                 annualCosts: downPayment,
                 cumulativeCosts: downPayment,
                 netPosition: 0,
@@ -1375,7 +1383,11 @@
                 const maintenance = propertyValue * (maintenanceRate / 100);
                 const insurance = propertyValue * (insuranceRate / 100);
                 
-                const annualCosts = annualPayment + propertyTax + maintenance + hoaAnnual + insurance;
+                // Calculate rental income with appreciation
+                const rentalIncome = initialAnnualRental * Math.pow(1 + 2 / 100, year);
+                
+                // Calculate net annual costs after rental income
+                const annualCosts = annualPayment + propertyTax + maintenance + hoaAnnual + insurance - rentalIncome;
                 cumulativeCosts += annualCosts;
                 
                 // Calculate net position (equity minus cumulative costs)
@@ -1397,6 +1409,7 @@
                     maintenance: maintenance,
                     hoa: hoaAnnual,
                     insurance: insurance,
+                    rentalIncome: rentalIncome,
                     annualCosts: annualCosts,
                     cumulativeCosts: cumulativeCosts,
                     netPosition: netPosition,
@@ -1428,6 +1441,7 @@
                     <td>${formatCurrency(row.maintenance)}</td>
                     <td>${formatCurrency(row.hoa)}</td>
                     <td>${formatCurrency(row.insurance)}</td>
+                    <td>${formatCurrency(row.rentalIncome)}</td>
                     <td>${formatCurrency(row.annualCosts)}</td>
                     <td>${formatCurrency(row.cumulativeCosts)}</td>
                     <td class="${row.netPosition >= 0 ? 'positive' : 'negative'}">${formatCurrency(row.netPosition)}</td>
